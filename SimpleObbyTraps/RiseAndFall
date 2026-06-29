@@ -1,0 +1,25 @@
+local part = script.Parent
+local startPos = part.Position
+
+local moveDistance = 10 -- How high the block rises (in studs)
+local moveSpeed = 2    -- Higher number equals faster movement
+local timer = 0
+
+-- This makes the part move up and down smoothly
+game:GetService("RunService").Heartbeat:Connect(function(deltaTime)
+	timer = timer + (deltaTime * moveSpeed)
+	
+	-- math.sin creates a smooth repeating wave motion
+	local offset = math.sin(timer) * moveDistance
+	part.Position = startPos + Vector3.new(0, offset, 0)
+end)
+
+-- This kills players on touch
+part.Touched:Connect(function(hit)
+	local character = hit.Parent
+	local humanoid = character:FindFirstChild("Humanoid")
+	
+	if humanoid then
+		humanoid.Health = 0
+	end
+end)
