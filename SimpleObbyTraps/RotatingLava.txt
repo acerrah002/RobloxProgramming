@@ -1,0 +1,17 @@
+local part = script.Parent
+local rotationSpeed = 2 -- Adjust this number to spin faster or slower
+
+-- This makes the part rotate continuously
+game:GetService("RunService").Heartbeat:Connect(function()
+	part.CFrame = part.CFrame * CFrame.Angles(0, math.rad(rotationSpeed), 0)
+end)
+
+-- This turns the part into lava (kills players on touch)
+part.Touched:Connect(function(hit)
+	local character = hit.Parent
+	local humanoid = character:FindFirstChild("Humanoid")
+	
+	if humanoid then
+		humanoid.Health = 0 -- Instantly defeats the player
+	end
+end)
